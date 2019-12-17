@@ -1,0 +1,44 @@
+.MenuList {
+    z-index: 90;
+    width: 80%;
+    max-width: 300px;
+    height: 100%;
+    background-color: rgba(248, 247, 247, 0.1);
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #fff;
+    display: block;
+    border-right: 2px solid #fff;
+}
+
+.MenuList ul {
+    list-style: none;
+    padding: 0 20px;
+}
+
+.MenuList ul li {
+    margin-top: 20px;
+    border: 2px solid #fff;
+    border-radius: 4px;
+    padding: 20px 10px;
+    position: relative;
+}
+
+.MenuList ul li:hover, .active {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.MenuListLink {
+    text-decoration: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
