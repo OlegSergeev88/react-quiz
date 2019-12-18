@@ -1,14 +1,21 @@
 import React from 'react';
 import classes from './Input.module.css';
 
-const Input = ({ type, onChange, value, label, error }) => {
+function isInvalid({ valid, touched, shouldValid }) {
+    return !valid && touched && shouldValid
+}
+
+const Input = ({ type, onChange, value, label, errorMessage }) => {
 
     const inputType = type || 'text';
-    const errorMessage = error || 'U did mistake'
+    const error = errorMessage || 'U did mistake'
     const htmlFor = `${inputType} + ${Math.random()}`;
     const cls = [
-        classes.Input
-    ]
+        classes.Input,
+        // isInvalid(valid, touched, shouldValid) ? classes.invalid : null
+    ];
+
+
 
     return (
         <div className={cls.join(' ')}>
