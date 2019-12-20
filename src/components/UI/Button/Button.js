@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Button.module.css'
 
-const Button = ({ children, onClick, type }) => {
+const Button = ({ children, onClick, type, disabled }) => {
 
     const cls = [
         classes.Button,
@@ -12,6 +12,7 @@ const Button = ({ children, onClick, type }) => {
         <button
             onClick={onClick}
             className={cls.join(' ')}
+            disabled={disabled}
         >
             {children}
         </button>

@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import classes from './Auth.module.css';
 import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
+import is from 'is_js'
 
 export default class Auth extends Component {
 
     state = {
+        isFormValid: false,
         formControls: {
             email: {
                 value: '',
@@ -28,16 +30,55 @@ export default class Auth extends Component {
                 touched: false,
                 validation: {
                     required: true,
-                    minLenght: 6
+                    minLength: 6
                 }
             }
         }
     }
 
+    validateControl = (value, validation) => {
+        if (!validation) {
+            return true
+        }
+
+        let isValid = true;
+
+        if (validation.required) {
+            isValid = value.trim() !== '' && isValid
+        }
+
+        if (validation.email) {
+            isValid = is.email(value) && isValid
+        }
+
+        if (validation.minLength) {
+            isValid = value.length >= validation.minLength && isValid
+        }
+
+        return isValid;
+    }
+
     handleInputChange = (event, controlName) => {
-        const res = event.target.value;
 
+        const { formControls } = this.state;
+        const control = { ...formControls[controlName] }
 
+        control.value = event.target.value;
+        control.touched = true;
+        control.valid = this.validateControl(control.value, control.validation);
+
+        formControls[controlName] = control;
+
+        let formValid = true;
+
+        Object.keys(formControls).forEach(name => {
+            formValid = formControls[name].valid
+        })
+
+        this.setState({
+            formControls,
+            isFormValid: formValid
+        })
     }
 
     renderInputs() {
@@ -66,8 +107,18 @@ export default class Auth extends Component {
                     <h1>Authorization</h1>
                     <form>
                         {this.renderInputs()}
-                        <Button onClick={this.loginHandler}>Log In</Button>
-                        <Button onClick={this.registrationHandler}>Sign In</Button>
+                        <Button
+                            onClick={this.loginHandler}
+                            disabled={!this.state.isFormValid}
+                        >
+                            Log In
+                        </Button>
+                        <Button
+                            onClick={this.registrationHandler}
+                            disabled={!this.state.isFormValid}
+                        >
+                            Sign In
+                         </Button>
                     </form>
                 </div>
             </div>

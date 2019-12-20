@@ -5,14 +5,14 @@ function isInvalid({ valid, touched, shouldValid }) {
     return !valid && touched && shouldValid
 }
 
-const Input = ({ type, onChange, value, label, errorMessage }) => {
+const Input = ({ type, onChange, value, label, errorMessage, valid, touched, shouldValidate }) => {
 
     const inputType = type || 'text';
     const error = errorMessage || 'U did mistake'
     const htmlFor = `${inputType} + ${Math.random()}`;
     const cls = [
         classes.Input,
-        // isInvalid(valid, touched, shouldValid) ? classes.invalid : null
+        isInvalid(valid, touched, shouldValidate) ? classes.invalid : null
     ];
 
 
@@ -27,7 +27,7 @@ const Input = ({ type, onChange, value, label, errorMessage }) => {
                 value={value}
             />
 
-            <span>{errorMessage}</span>
+            <span>{touched ? (valid ? null : error) : null}</span>
         </div>
     )
 }
